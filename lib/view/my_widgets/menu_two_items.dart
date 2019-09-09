@@ -16,9 +16,12 @@ class Menu2Items extends StatelessWidget {
       width: 300.0,
       height: 50.0,
       decoration: BoxDecoration(color: pointer, borderRadius: BorderRadius.all(Radius.circular(25.0))),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[itemButton(item1), itemButton(item2)],
+      child: CustomPaint(
+        painter: MyPainter(pageController),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[itemButton(item1), itemButton(item2)],
+        ),
       ),
     );
   }
