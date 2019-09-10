@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_social/view/my_material.dart';
 import 'package:flutter_social/view/my_widgets/menu_two_items.dart';
 import 'package:flutter_social/util/alert_helper.dart';
+import 'package:flutter_social/util/fire_helper.dart';
 
 
 class LogController extends StatefulWidget {
@@ -132,13 +133,13 @@ class _LogControllerState extends State<LogController> {
       if (_pwd.text != null && _pwd.text != "" ) {
         if (exists) {
           // Connexion avec mail et password
-          AlertHelper().error(context, "Tout est OK");
+          FireHelper().signIn(_mail.text, _pwd.text);
         } else {
           // Verifier nom et prenom puis inscription
           if (_name.text != null && _name.text != "" ) {
             if (_surname.text != null && _surname.text != "") {
               // Inscription
-              AlertHelper().error(context, "Tout est OK");
+              FireHelper().createAccount(_mail.text, _pwd.text, _name.text, _surname.text);
             } else {
               // Alerte pas prénom
               AlertHelper().error(context, "Aucun prénom");
