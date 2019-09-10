@@ -1,7 +1,6 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_social/view/my_widgets/constants.dart';
+
 
 class User {
 
@@ -17,7 +16,7 @@ class User {
   User(DocumentSnapshot snapshot) {
     ref = snapshot.reference;
     documentId = snapshot.documentID;
-    Map<String, dynamic> map;
+    Map<String, dynamic> map = snapshot.data;
     uid = map[keyUid];
     name = map[keyName];
     surname = map[keySurname];
