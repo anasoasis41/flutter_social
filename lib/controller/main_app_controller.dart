@@ -6,6 +6,11 @@ import 'package:flutter_social/view/my_material.dart';
 import 'package:flutter_social/util/fire_helper.dart';
 import 'package:flutter_social/view/my_widgets/bar_items.dart';
 import 'package:flutter_social/view/my_widgets/bottom_bar.dart';
+import 'package:flutter_social/view/pages/feed_page.dart';
+import 'package:flutter_social/view/pages/notif_page.dart';
+import 'package:flutter_social/view/pages/profil_page.dart';
+import 'package:flutter_social/view/pages/users_page.dart';
+
 
 class MainAppController extends StatefulWidget {
 
@@ -49,17 +54,24 @@ class _MainAppControllerState extends State<MainAppController> {
         ? LoadingScaffold()
         : Scaffold(
       key: _globalKey,
+      backgroundColor: base,
       bottomNavigationBar: BottomBar(
         items: [
-          BarItem(icon: Icon(Icons.android), onPressed: (() => buttonSelected(0)), selected: (index == 0)),
-          BarItem(icon: Icon(Icons.android), onPressed: (() => buttonSelected(1)), selected: (index == 1)),
-          BarItem(icon: Icon(Icons.android), onPressed: (() => buttonSelected(2)), selected: (index == 2))
+          BarItem(icon: homeIcon, onPressed: (() => buttonSelected(0)), selected: (index == 0)),
+          BarItem(icon: friendsIcon, onPressed: (() => buttonSelected(1)), selected: (index == 1)),
+          Container(width: 0.0, height: 0.0,),
+          BarItem(icon: notifIcon, onPressed: (() => buttonSelected(2)), selected: (index == 2)),
+          BarItem(icon: profilIcon, onPressed: (() => buttonSelected(3)), selected: (index == 3))
         ],
       ),
-      body: Center(
-        child: MyText(user.name,color: baseAccent,),
-      )
+      body: showPage(),
+      floatingActionButton: FloatingActionButton(onPressed: write, child: writeIcon, backgroundColor: pointer,),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
+  }
+
+  write() {
+
   }
 
   buttonSelected(int index) {
@@ -68,6 +80,16 @@ class _MainAppControllerState extends State<MainAppController> {
       this.index = index;
     });
   }
+
+  Widget showPage() {
+    switch (index) {
+      case 0: return FeedPage(user);
+      case 1: return UsersPage(user);
+      case 2: return NotifPage(user);
+      case 3: return ProfilPage(user);
+    }
+  }
+
 }
 
 
