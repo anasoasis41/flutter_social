@@ -7,3 +7,5 @@ export 'my_widgets/menu_two_items.dart';
 export 'my_widgets/painter.dart';
 export 'my_widgets/my_textfield.dart';
 export 'my_widgets/my_text.dart';
+export 'my_widgets/loading_scaffold.dart';
+export 'my_widgets/loading_center.dart';

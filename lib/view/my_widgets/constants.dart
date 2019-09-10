@@ -11,3 +11,11 @@ AssetImage logoImage = AssetImage("assets/mylogo.jpg");
 AssetImage eventImage = AssetImage("assets/event.jpg");
 AssetImage homeImage = AssetImage("assets/home.jpg");
 AssetImage profileImage = AssetImage("assets/profile.jpg");
+
+// Keys
+String keyName = "name";
+String keySurname = "surname";
+String keyImageUrl = "imageUrl";
+String keyFollowers = "followers";
+String keyFollowing = "following";
+String keyUid = "uid";
