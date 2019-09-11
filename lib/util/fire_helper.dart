@@ -45,6 +45,32 @@ class FireHelper {
   addUser(String uid, Map<String, dynamic> map) {
     fire_user.document(uid).setData(map);
   }
+  addPost(String uid, String text, File file) {
+    int date = DateTime.now().millisecondsSinceEpoch.toInt();
+    List<dynamic> likes = [];
+    List<dynamic> comments = [];
+    Map<String, dynamic> map = {
+      keyUid: uid,
+      keyLikes: likes,
+      keyComments: comments,
+      keyDate: date
+    };
+    if (text != null && text != "") {
+      map[keyText] = text;
+    }
+
+    if (file != null) {
+      StorageReference ref = storage_posts.child(uid).child(date.toString());
+      addImage(file, ref).then((finalised) {
+        String imageUrl = finalised;
+        map[keyImageUrl] = imageUrl;
+        fire_user.document(uid).collection("posts").document().setData(map);
+      });
+    } else {
+      fire_user.document(uid).collection("posts").document().setData(map);
+    }
+  }
+
 
   // Storage
   static final storage_instance = FirebaseStorage.instance.ref();

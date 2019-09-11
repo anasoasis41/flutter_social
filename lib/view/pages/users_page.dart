@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_social/models/user.dart';
 import 'package:flutter_social/view/my_material.dart';
 
 
 class UsersPage extends StatefulWidget {
-
-  User user;
-  UsersPage(this.user);
 
   @override
   _UsersPageState createState() => _UsersPageState();

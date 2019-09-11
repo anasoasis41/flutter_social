@@ -26,7 +26,6 @@ class _MainAppControllerState extends State<MainAppController> {
 
   GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
   StreamSubscription streamListener;
-  User user;
   int index = 0;
 
   @override
@@ -36,7 +35,7 @@ class _MainAppControllerState extends State<MainAppController> {
     // Créer une souscription au stream
     streamListener = FireHelper().fire_user.document(widget.uid).snapshots().listen((document) {
       setState(() {
-        user = User(document);
+        me = User(document);
       });
     });
   }
@@ -51,7 +50,7 @@ class _MainAppControllerState extends State<MainAppController> {
 
   @override
   Widget build(BuildContext context) {
-    return (user == null)
+    return (me == null)
         ? LoadingScaffold()
         : Scaffold(
       key: _globalKey,
@@ -84,10 +83,10 @@ class _MainAppControllerState extends State<MainAppController> {
 
   Widget showPage() {
     switch (index) {
-      case 0: return FeedPage(user);
-      case 1: return UsersPage(user);
-      case 2: return NotifPage(user);
-      case 3: return ProfilPage(user);
+      case 0: return FeedPage();
+      case 1: return UsersPage();
+      case 2: return NotifPage();
+      case 3: return ProfilPage();
     }
   }
 

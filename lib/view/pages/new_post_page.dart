@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_social/util/fire_helper.dart';
 import 'package:flutter_social/view/my_material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -94,7 +95,11 @@ class _NewPostState extends State<NewPost> {
   }
 
   sendToFirebase() {
-
+    FocusScope.of(context).requestFocus(FocusNode());
+    Navigator.pop(context);
+    if (imageTaken != null || (_controller.text != null && _controller.text != "")) {
+      FireHelper().addPost(me.uid, _controller.text, imageTaken);
+    }
   }
 }
 

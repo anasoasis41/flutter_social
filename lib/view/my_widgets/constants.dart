@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_social/models/user.dart';
 
+
+// User Global
+User me;
 
 const Color white = const Color(0xFFFFFFFF);
 const Color base = const Color(0xFFBDBDBD);
