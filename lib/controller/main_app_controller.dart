@@ -86,7 +86,7 @@ class _MainAppControllerState extends State<MainAppController> {
       case 0: return FeedPage();
       case 1: return UsersPage();
       case 2: return NotifPage();
-      case 3: return ProfilPage();
+      case 3: return ProfilPage(me);
     }
   }
 
