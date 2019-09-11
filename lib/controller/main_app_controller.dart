@@ -7,6 +7,7 @@ import 'package:flutter_social/util/fire_helper.dart';
 import 'package:flutter_social/view/my_widgets/bar_items.dart';
 import 'package:flutter_social/view/my_widgets/bottom_bar.dart';
 import 'package:flutter_social/view/pages/feed_page.dart';
+import 'package:flutter_social/view/pages/new_post_page.dart';
 import 'package:flutter_social/view/pages/notif_page.dart';
 import 'package:flutter_social/view/pages/profil_page.dart';
 import 'package:flutter_social/view/pages/users_page.dart';
@@ -71,7 +72,7 @@ class _MainAppControllerState extends State<MainAppController> {
   }
 
   write() {
-
+    _globalKey.currentState.showBottomSheet((builder) => NewPost());
   }
 
   buttonSelected(int index) {

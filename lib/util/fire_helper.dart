@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_social/view/my_material.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 
 class FireHelper {
@@ -44,4 +47,33 @@ class FireHelper {
   }
 
   // Storage
+  static final storage_instance = FirebaseStorage.instance.ref();
+  final storage_user = storage_instance.child("users");
+  final storage_posts = storage_instance.child("posts");
+
+  Future<String> addImage(File file, StorageReference ref) async {
+    StorageUploadTask task = ref.putFile(file);
+    StorageTaskSnapshot snapshot = await task.onComplete;
+    String urlString = await snapshot.ref.getDownloadURL();
+    return urlString;
+  }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
