@@ -1,6 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_social/models/user.dart';
+import 'package:flutter_social/util/alert_helper.dart';
 import 'package:flutter_social/view/my_material.dart';
+import 'package:flutter_social/view/my_widgets/profile_image.dart';
 
 
 class MyHeader extends SliverPersistentHeaderDelegate {
@@ -18,7 +22,43 @@ class MyHeader extends SliverPersistentHeaderDelegate {
       margin: EdgeInsets.only(bottom: 5.0),
       padding: EdgeInsets.all(10.0),
       color: baseAccent,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          (scrolled) ? Container(width: 0.0, height: 0.0,) : element(context, "${user.surname} ${user.name}"),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              ProfileImage(urlString: user.imageUrl, onPressed: null,),
+              element(context, (user.description == null) ? ("Aucune description"): user.description)
+            ],
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width, height: 1.0, color: base,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              InkWell(child: MyText("Followers: ${user.followers.length}"),),
+              InkWell(child: MyText("Following: ${user.following.length - 1}"),),
+            ],
+          )
+        ],
+      ),
     );
+  }
+
+  Widget element(BuildContext context, String text) {
+    if (user.uid == me.uid) {
+      return InkWell(
+        child: MyText(text),
+        onTap: () => AlertHelper().changeUser(context),
+      );
+    } else {
+      return MyText(text);
+    }
   }
 
   @override
