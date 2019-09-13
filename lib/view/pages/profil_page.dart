@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +10,8 @@ import 'package:flutter_social/util/fire_helper.dart';
 import 'package:flutter_social/delegate/header_delegate.dart';
 import 'package:flutter_social/view/my_widgets/profile_image.dart';
 import 'package:flutter_social/view/tiles/post_tile.dart';
+import 'package:flutter_social/view/my_widgets/my_textfield.dart';
+import 'package:image_picker/image_picker.dart';
 
 
 class ProfilPage extends StatefulWidget {
@@ -26,6 +28,9 @@ class _ProfilPageState extends State<ProfilPage> {
 
   bool _isMe = false;
   ScrollController controller;
+  TextEditingController _name;
+  TextEditingController _surname;
+  TextEditingController _desc;
   double expanded = 200.0;
   bool get _showTitle {
     return controller.hasClients && controller.offset > expanded - kToolbarHeight;
@@ -40,12 +45,18 @@ class _ProfilPageState extends State<ProfilPage> {
       setState(() {
       });
     });
+    _name = TextEditingController();
+    _surname = TextEditingController();
+    _desc = TextEditingController();
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
     controller.dispose();
+    _name.dispose();
+    _surname.dispose();
+    _desc.dispose();
     super.dispose();
   }
 
@@ -73,13 +84,13 @@ class _ProfilPageState extends State<ProfilPage> {
                   title: _showTitle ? MyText(widget.user.surname + " " + widget.user.name) : MyText(""),
                   background: Container(
                     decoration: BoxDecoration(image: DecorationImage(image: profileImage, fit: BoxFit.cover)),
-                    child: Center(child: ProfileImage(urlString: widget.user.imageUrl, size: 75.0, onPressed: null,),),
+                    child: Center(child: ProfileImage(urlString: widget.user.imageUrl, size: 75.0, onPressed: changeUser,),),
                   ),
                 ),
               ),
               SliverPersistentHeader(
                 pinned: true,
-                delegate: MyHeader(user: widget.user, callback: null, scrolled: _showTitle),
+                delegate: MyHeader(user: widget.user, callback: changeFields, scrolled: _showTitle),
               ),
               SliverList(delegate: SliverChildBuilderDelegate((BuildContext context, index) {
                 if (index == documents.length)
@@ -95,6 +106,55 @@ class _ProfilPageState extends State<ProfilPage> {
         }
       },
     );
+  }
+
+  void changeFields() {
+    AlertHelper().changeUserAlert(context, name: _name, surname: _surname, desc: _desc);
+  }
+
+  void changeUser() {
+    showModalBottomSheet(context: context, builder: (BuildContext ctx) {
+      return Container(
+        color: Colors.transparent,
+        child: Card(
+          elevation: 5.0,
+          margin: EdgeInsets.all(7.5),
+          child: Container(
+            color: base,
+            padding: EdgeInsets.all(10.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                MyText("Modification de la photo de profil"),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    IconButton(icon: camIcon, onPressed: (() {
+                      takePicture(ImageSource.camera);
+                      Navigator.pop(ctx);
+                    })
+                    ),
+                    IconButton(icon: libraryIcon, onPressed: (() {
+                      takePicture(ImageSource.gallery);
+                      Navigator.pop(ctx);
+                    }))
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+      );
+    });
+  }
+
+  Future<void> takePicture(ImageSource source) async {
+    File file = await ImagePicker.pickImage(source: source);
+    FireHelper().modifyPicture(file);
+  }
+
+  validate() {
+
   }
 }
 
