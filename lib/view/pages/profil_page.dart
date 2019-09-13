@@ -149,7 +149,7 @@ class _ProfilPageState extends State<ProfilPage> {
   }
 
   Future<void> takePicture(ImageSource source) async {
-    File file = await ImagePicker.pickImage(source: source);
+    File file = await ImagePicker.pickImage(source: source, maxHeight: 500.0, maxWidth: 500.0);
     FireHelper().modifyPicture(file);
   }
 

@@ -10,3 +10,4 @@ export 'my_widgets/my_text.dart';
 export 'my_widgets/loading_scaffold.dart';
 export 'my_widgets/loading_center.dart';
 export 'my_widgets/button_gradient.dart';
+export 'my_widgets/follow_button.dart';

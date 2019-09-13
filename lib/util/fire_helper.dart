@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_social/models/user.dart';
 import 'package:flutter_social/view/my_material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -58,7 +59,16 @@ class FireHelper {
       Map<String, dynamic> data = {keyImageUrl: finalised};
       modifyUser(data);
     });
+  }
 
+  addFollow(User other) {
+    if (me.following.contains(other.uid)) {
+      me.ref.updateData({keyFollowing: FieldValue.arrayRemove([other.uid])});
+      other.ref.updateData({keyFollowers: FieldValue.arrayRemove([me.uid])});
+    } else {
+      me.ref.updateData({keyFollowing: FieldValue.arrayUnion([other.uid])});
+      other.ref.updateData({keyFollowers: FieldValue.arrayUnion([me.uid])});
+    }
   }
 
   addPost(String uid, String text, File file) {
