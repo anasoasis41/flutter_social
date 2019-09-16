@@ -22,8 +22,8 @@ class FireHelper {
     final AuthResult user = await auth_instance.createUserWithEmailAndPassword(email: mail, password: pwd);
     // Create user into DB
     String uid = user.user.uid;
-    List<dynamic> followers = [];
-    List<dynamic> following = [uid];
+    List<dynamic> followers = [uid];
+    List<dynamic> following = [];
     Map<String, dynamic> map = {
       keyName: name,
       keySurname: surname,
