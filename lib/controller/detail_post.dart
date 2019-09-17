@@ -43,7 +43,7 @@ class DetailPost extends StatelessWidget {
                     FocusScope.of(context).requestFocus(FocusNode());
                     if (controller.text != null && controller.text != "") {
                       // Send To Firebase
-                      FireHelper().addComment(post.ref, controller.text);
+                      FireHelper().addComment(post.ref, controller.text, post.userId);
                     }
                   },)
                 ],
