@@ -4,8 +4,8 @@ import 'package:flutter_social/models/comment.dart';
 import 'package:flutter_social/models/post.dart';
 import 'package:flutter_social/models/user.dart';
 import 'package:flutter_social/view/my_material.dart';
+import 'package:flutter_social/view/tiles/comment_tile.dart';
 import 'package:flutter_social/view/tiles/post_tile.dart';
-
 
 
 class DetailPage extends StatelessWidget {
@@ -28,8 +28,8 @@ class DetailPage extends StatelessWidget {
                 if (index == 0) {
                   return PostTile(post: newPost, user: user, detail: true,);
                 } else {
-                  Comment comment = Comment(post.comments[index - 1]);
-                  return ListTile(title: MyText(comment.text),);
+                  Comment comment = Comment(newPost.comments[index - 1]);
+                  return CommentTile(comment);
                 }
             });
         } else {
