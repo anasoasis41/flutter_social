@@ -11,6 +11,9 @@ import 'package:flutter_social/view/tiles/post_tile.dart';
 
 class FeedPage extends StatefulWidget {
 
+  String myId;
+  FeedPage(this.myId);
+
   @override
   _FeedPageState createState() => _FeedPageState();
 }
@@ -53,7 +56,7 @@ class _FeedPageState extends State<FeedPage> {
   }
 
   setupSubscription() {
-    subscription = FireHelper().fire_user.where(keyFollowers, arrayContains: me.uid).snapshots().listen((datas) {
+    subscription = FireHelper().fire_user.where(keyFollowers, arrayContains: widget.myId).snapshots().listen((datas) {
       getUsers(datas.documents);
       datas.documents.forEach((docs) {
         docs.reference.collection("posts").snapshots().listen((post) {
